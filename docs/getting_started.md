@@ -13,7 +13,7 @@ För att kunna använda dessa skript behöver du följande:
 
 För att interagera med Jira-projekt behöver du hämta deras ID:n. Använd följande skript för att hämta alla projekt och deras ID.
 
-### [getAllProjects.groovy](Scripts/get_projects.groovy)
+### [get_projects.groovy](Scripts/get_projects.groovy)
 
 Detta skript hämtar alla projekt i din Jira-instans och skriver ut deras namn, nyckel och ID till loggen. Du kan använda dessa ID:n för att skapa, uppdatera eller ta bort projekt.
 
