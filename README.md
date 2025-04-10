@@ -2,5 +2,10 @@
 
 ## Syfte
 
-## Skript
-- **gettingstarted.groovy**: Ett skript som hämtar projektinformation och filtrerar baserat på projektets namn.
+## Teknologi
+- Jira Service Management
+- ScriptRunner for Jira Cloud
+- Jira REST API
+
+## Komma igång
+För att komma igång, följ guiden i [Getting Started](docs/gettingstarted.md).
