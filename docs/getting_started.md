@@ -24,5 +24,3 @@ För att köra skriptet:
 projekt.
 ![Namnlös](https://github.com/user-attachments/assets/378e7da5-6c17-4618-ac89-b6dad8b494ac)
 
-## Steg 2: Lägg till API-nyckel för autentisering
-För att autentisera API-förfrågningar behöver du en API-nyckel. Följ denna länk till Atlassians dokumentation för att skapa en API-nyckel och använd den i dina skript.
