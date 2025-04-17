@@ -1,12 +1,14 @@
 // Fältnamn + tillhörande alternativ
 def fieldOptionMap = [
-    "Vad gäller ärendet? - Lokal"        : ["Belysning", "Inpassering", "Kontorslokaler", "Kontorsstol", "Mötesrum", "Toaletter", "Ventilation"],
-    "Vad gäller ärendet? - Uppkoppling & säkerhet": ["EFOS-kort", "Lösenord", "Nätverk", "VPN", "Webbläsare", "Wifi"],
-    "Vad gäller ärendet? - Hårdvara & Utrustning": ["Dator och tillhörande hårdvara", "Kablar", "Konferenstelefon", "Mobiltelefon och trådlöst headset", "Projektor", "Skrivare", "Utskrift", "Videokonferens", "Videoutrustning"],
-    "Vad gäller ärendet? - Handläggningssystem": ["Försättsblad skanning (EDH)", "Hemutrustningslån", "In- och utdata(central posthantering)", "Körkortslån", "STELLA Omstållningsstudiestöd", "STIS Ekonomi", "STIS Gemensamma system", "STIS Studiehjälp", "STIS Återbetalning"],
+    "Vad gäller ärendet? - Lokal" : ["Belysning", "Inpassering", "Kontorslokaler", "Kontorsstol", "Mötesrum", "Toaletter", "Ventilation"],
+    "Vad gäller ärendet? - Uppkoppling & säkerhet" : ["EFOS-kort", "Lösenord", "Nätverk", "VPN", "Webbläsare", "Wifi"],
+    "Vad gäller ärendet? - Hårdvara & Utrustning" : ["Dator och tillhörande hårdvara", "Kablar", "Konferenstelefon", "Mobiltelefon och trådlöst headset", "Projektor", "Skrivare", "Utskrift", "Videokonferens", "Videoutrustning"],
+    "Vad gäller ärendet? - Handläggningssystem" : ["Försättsblad skanning (EDH)", "Hemutrustningslån", "In- och utdata(central posthantering)", "Körkortslån", "STELLA Omstållningsstudiestöd", "STIS Ekonomi", "STIS Gemensamma system", "STIS Studiehjälp", "STIS Återbetalning"],
     "Vad gäller ärendet? - Självservicekanaler" : ["csn.se", "Mina sidor", "Mina tjänster"],
     "Vad gäller ärendet? - Microsoft Office" : ["Excel", "Office", "Outlook", "Powerpoint", "Word", "Wordmallar"],
-
+    "Vad gäller ärendet? - HR & Ekonomi" : ["Antura", "ERP", "IA-system", "Läroportalen", "Primula", "Proceedo", "Reachmee"],
+    "Vad gäller ärendet? - Dokumentations & ärendehantering" : ["Confluence", "Jira", "Mimer", "Sharepoint", "Storegate"],
+    "Vad gäller ärendet? - Kommunikationsverktyg" : ["ACE", "Skype", "Softphone", "Telefoni", "Touchpoint"]
 ]
 
 fieldOptionMap.each { fieldName, optionsToAdd ->
