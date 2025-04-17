@@ -1,42 +1,35 @@
+// Fältnamn + tillhörande alternativ
+def fieldOptionMap = [
+    "Vad gäller ärendet? - Lokal"        : ["Belysning", "Inpassering", "Kontorslokaler", "Kontorsstol", "Mötesrum", "Toaletter", "Ventilation"],
+    "Vad gäller ärendet? - Uppkoppling & säkerhet": ["EFOS-kort", "Lösenord", "Nätverk", "VPN", "Webbläsare", "Wifi"],
+    "Vad gäller ärendet? - Hårdvara & Utrustning": ["Dator och tillhörande hårdvara", "Kablar", "Konferenstelefon", "Mobiltelefon och trådlöst headset", "Projektor", "Skrivare", "Utskrift", "Videokonferens", "Videoutrustning"],
+    "Vad gäller ärendet? - Handläggningssystem": ["Försättsblad skanning (EDH)", "Hemutrustningslån", "In- och utdata(central posthantering)", "Körkortslån", "STELLA Omstållningsstudiestöd", "STIS Ekonomi", "STIS Gemensamma system", "STIS Studiehjälp", "STIS Återbetalning"],
+    "Vad gäller ärendet? - Självservicekanaler" : ["csn.se", "Mina sidor", "Mina tjänster"],
+    "Vad gäller ärendet? - Microsoft Office" : ["Excel", "Office", "Outlook", "Powerpoint", "Word", "Wordmallar"],
 
-import com.atlassian.jira.component.ComponentAccessor
-import com.atlassian.jira.issue.customfields.manager.OptionsManager
-import com.atlassian.jira.issue.fields.config.FieldConfig
-
-// 1. Hämta fältet
-def customFieldName = "Vad gäller ärendet?"
-def customFieldManager = ComponentAccessor.customFieldManager
-def optionsManager = ComponentAccessor.getComponent(OptionsManager)
-def field = customFieldManager.getCustomFieldObjects().find { it.name == customFieldName }
-
-// 2. Kontrollera om fältet finns
-if (!field) {
-    log.error "Fältet '$customFieldName' finns inte. Skapa det först."
-    return
-}
-
-// 3. Hämta fältkonfiguration
-def config = field.getRelevantConfig(ComponentAccessor.jiraApplicationContext.getGlobalIssueContext())
-if (!config) {
-    log.error "Ingen konfiguration hittades för fältet '$customFieldName'."
-    return
-}
-
-// 4. Definiera alternativ (exempel)
-def options = [
-    [value: "Tak", position: 1],
-    [value: "Ventilation", position: 2],
-    [value: "El", position: 3],
-    [value: "Kyl/FRY", position: 4]
 ]
 
-// 5. Lägg till alternativ (om de inte redan finns)
-options.each { opt ->
-    def existingOption = optionsManager.getOptions(config).find { it.value == opt.value }
-    if (existingOption) {
-        log.warn "Alternativet '${opt.value}' finns redan (ID: ${existingOption.optionId})."
-    } else {
-        def newOption = optionsManager.createOption(config, null, opt.value, opt.position)
-        log.info "Alternativet '${newOption.value}' (ID: ${newOption.optionId}) tillagt."
+fieldOptionMap.each { fieldName, optionsToAdd ->
+    def field = customFieldManager.getCustomFieldObjects().find { it.name == fieldName }
+    if (!field) {
+        log.warn "Fältet '${fieldName}' finns inte – hoppar över."
+        return
+    }
+
+    def config = field.getRelevantConfig(null)
+    if (!config) {
+        log.warn "FieldConfig saknas för '${fieldName}' – hoppar över."
+        return
+    }
+
+    def existing = optionsManager.getOptions(config).collect { it.value }
+
+    optionsToAdd.eachWithIndex { opt, idx ->
+        if (opt in existing) {
+            log.info "Alternativet '${opt}' finns redan för '${fieldName}'."
+        } else {
+            def newOpt = optionsManager.createOption(config, null, opt, idx + 1)
+            log.info "Alternativ '${opt}' tillagt i '${fieldName}' (ID: ${newOpt.optionId})"
+        }
     }
 }
