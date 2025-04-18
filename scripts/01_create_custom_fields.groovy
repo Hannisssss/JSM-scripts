@@ -1,12 +1,24 @@
 import com.atlassian.jira.component.ComponentAccessor
 import com.atlassian.jira.issue.customfields.manager.CustomFieldManager
 import com.atlassian.jira.issue.customfields.manager.FieldConfigSchemeManager
-import com.atlassian.jira.issue.customfields.impl.SelectCFType
-import com.atlassian.jira.issue.context.GlobalIssueContext
+import com.atlassian.jira.issue.context.ProjectContext
 import com.atlassian.jira.issue.context.JiraContextImpl
+import com.atlassian.jira.project.ProjectManager
 
 def customFieldManager = ComponentAccessor.getCustomFieldManager()
 def fieldConfigSchemeManager = ComponentAccessor.getComponent(FieldConfigSchemeManager)
+def projectManager = ComponentAccessor.getProjectManager()
+
+// Hämta projektet "Felanmälan" med nyckel "FEL"
+def project = projectManager.getProjectByCurrentKey("FEL")
+
+if (!project) {
+    log.error "Projektet 'Felanmälan' hittades inte."
+    return
+}
+
+// Skapa kontext för projektet
+def projectContext = new ProjectContext(project.id)
 
 // Kontrollera om fältet redan finns
 def existingField = customFieldManager.getCustomFieldObjects().find {
@@ -18,16 +30,14 @@ if (existingField) {
     return
 }
 
-// Skapa custom field i global kontext (eller justera till en specifik kontext om det behövs)
-def jiraContext = new JiraContextImpl(GlobalIssueContext.getInstance())
-
+// Skapa custom field i projektets kontext
 def newField = customFieldManager.createCustomField(
     "Vad gäller ärendet?",                        // Namn på fältet
     "Specificering av lokalrelaterat problem",     // Beskrivning (visas i Admin)
     customFieldManager.getCustomFieldType("com.atlassian.jira.plugin.system.customfieldtypes:select"), // Typ: Single Select
     customFieldManager.getCustomFieldSearcher("com.atlassian.jira.plugin.system.customfieldtypes:selectsearcher"), // Sökningsstöd
-    [jiraContext] as Collection,                   // Kontexter
+    [projectContext] as Collection,                // Skapa kontexten för projektet "Felanmälan"
     []  // Field configuration schemes kan läggas till senare om du vill definiera specifika konfigurationer
 )
 
-log.info "Fältet 'Vad gäller ärendet?' har skapats med ID: ${newField.id}"
+log.info "Fältet 'Vad gäller ärendet?' har skapats med ID: ${newField.id} för projektet 'Felanmälan'"
