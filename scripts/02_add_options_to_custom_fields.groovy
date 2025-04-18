@@ -1,14 +1,14 @@
 import com.atlassian.jira.component.ComponentAccessor
 import com.atlassian.jira.issue.customfields.manager.OptionsManager
 import com.atlassian.jira.issue.fields.CustomField
-import com.atlassian.jira.issue.fields.config.FieldConfig
 import com.atlassian.jira.issue.customfields.impl.SelectCFType
+import com.atlassian.jira.project.ProjectManager
 
 def customFieldManager = ComponentAccessor.getCustomFieldManager()
 def optionsManager = ComponentAccessor.getOptionsManager()
 def projectManager = ComponentAccessor.getProjectManager()
 
-// Hämta projektet med namn "Felanmälan" (Projektet måste finnas redan)
+// Hämta projektet "Felanmälan" (Projektet måste finnas redan)
 def targetProject = projectManager.getProjectObjByName("Felanmälan")
 if (!targetProject) {
     log.warn "Projektet 'Felanmälan' hittades inte – avslutar scriptet."
@@ -43,6 +43,11 @@ fieldOptionMap.each { fieldName, optionsToAdd ->
     }
 
     def schemes = field.getConfigurationSchemes()
+    if (schemes.isEmpty()) {
+        log.warn "Fältet '${fieldName}' har inga konfigurationer – hoppar över."
+        return
+    }
+
     schemes.each { scheme ->
         scheme.configs.each { config ->
             def context = config.context
