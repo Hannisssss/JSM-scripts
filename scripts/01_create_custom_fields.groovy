@@ -37,4 +37,4 @@ def newField = customFieldManager.createCustomField(
     [issueType.id] as Collection<String>
 )
 
-log.info "✅ Fält skapat: ${newField.name} (ID: ${newField.id}) för projektet ${project.name} och issue type ${issueType.name}"
+log.info "Fält skapat: ${newField.name} (ID: ${newField.id}) för projektet ${project.name} och issue type ${issueType.name}"
