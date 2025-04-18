@@ -22,15 +22,15 @@ if (!project) {
 
 // Här listar vi de request types du vill skapa, med fältnamn som ska associeras
 def requestTypesToCreate = [
-    [name: "Lokal",                          description: "Fel på lokaler, t.ex. ventilation, belysning",                      fieldName: "Vad gäller ärendet? - Lokal"],
-    [name: "Uppkoppling & Säkerhet",         description: "Problem med nätverk, VPN eller lösenord",                          fieldName: "Vad gäller ärendet? - Uppkoppling & säkerhet"],
-    [name: "Hårdvara & Utrustning",          description: "Fel på dator, skrivare, kablar m.m.",                              fieldName: "Vad gäller ärendet? - Hårdvara & Utrustning"],
-    [name: "Handläggningssystem",            description: "Fel i interna system som STIS, STELLA, EDH",                        fieldName: "Vad gäller ärendet? - Handläggningssystem"],
+    [name: "Lokal",                          description: "Fel på t.ex. ventilation, belysning",                      fieldName: "Vad gäller ärendet? - Lokal"],
+    [name: "Uppkoppling & Säkerhet",         description: "Problem med t.ex. nätverk, VPN eller lösenord",                          fieldName: "Vad gäller ärendet? - Uppkoppling & Säkerhet"],
+    [name: "Hårdvara & Utrustning",          description: "Fel på t.ex. dator, skrivare, kablar",                              fieldName: "Vad gäller ärendet? - Hårdvara & Utrustning"],
+    [name: "Handläggningssystem",            description: "Fel i system som t.ex. STIS, STELLA, EDH",                        fieldName: "Vad gäller ärendet? - Handläggningssystem"],
     [name: "Självservicekanaler",            description: "Fel på csn.se, Mina sidor eller Mina tjänster",                    fieldName: "Vad gäller ärendet? - Självservicekanaler"],
-    [name: "Microsoft Office",               description: "Problem med Office, Word, Outlook m.m.",                            fieldName: "Vad gäller ärendet? - Microsoft Office"],
-    [name: "HR & Ekonomi",                   description: "Fel i system som Primula, Proceedo, ERP",                          fieldName: "Vad gäller ärendet? - HR & Ekonomi"],
-    [name: "Dokumentation & Ärendehantering",description: "Fel i Confluence, Sharepoint, Mimer",                              fieldName: "Vad gäller ärendet? - Dokumentations & ärendehantering"],
-    [name: "Kommunikationsverktyg",          description: "Fel i Skype, telefoni, Softphone, ACE",                            fieldName: "Vad gäller ärendet? - Kommunikationsverktyg"]
+    [name: "Microsoft Office",               description: "Problem med t.ex. Office, Word, Outlook",                            fieldName: "Vad gäller ärendet? - Microsoft Office"],
+    [name: "HR & Ekonomi",                   description: "Fel i t.ex. Primula, Proceedo, ERP",                          fieldName: "Vad gäller ärendet? - HR & Ekonomi"],
+    [name: "Dokumentation & Ärendehantering",description: "Fel i t.ex. Confluence, Sharepoint, Mimer",                              fieldName: "Vad gäller ärendet? - Dokumentations & Ärendehantering"],
+    [name: "Kommunikationsverktyg",          description: "Fel i t.ex. Skype, telefoni, ACE",                            fieldName: "Vad gäller ärendet? - Kommunikationsverktyg"]
 ]
 
 // Hämta issue type "Incident"
