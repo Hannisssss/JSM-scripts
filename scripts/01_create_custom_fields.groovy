@@ -1,43 +1,40 @@
 import com.atlassian.jira.component.ComponentAccessor
-import com.atlassian.jira.issue.customfields.manager.CustomFieldManager
-import com.atlassian.jira.issue.customfields.manager.FieldConfigSchemeManager
-import com.atlassian.jira.issue.context.ProjectContext
+import com.atlassian.jira.issue.context.manager.FieldConfigSchemeManager
 import com.atlassian.jira.issue.context.JiraContextImpl
+import com.atlassian.jira.issue.context.JiraContextNode
 import com.atlassian.jira.project.ProjectManager
+import com.atlassian.jira.issue.issuetype.IssueType
 
 def customFieldManager = ComponentAccessor.getCustomFieldManager()
 def fieldConfigSchemeManager = ComponentAccessor.getComponent(FieldConfigSchemeManager)
 def projectManager = ComponentAccessor.getProjectManager()
+def constantsManager = ComponentAccessor.getConstantsManager()
 
-// Hämta projektet "Felanmälan" med nyckel "FEL"
-def project = projectManager.getProjectByCurrentKey("FEL")
-
+def project = projectManager.getProjectObjByName("Felanmälan")
 if (!project) {
-    log.error "Projektet 'Felanmälan' hittades inte."
+    log.error "Projektet 'Felanmälan' kunde inte hittas."
     return
 }
 
-// Skapa kontext för projektet
-def projectContext = new ProjectContext(project.id)
-
-// Kontrollera om fältet redan finns
-def existingField = customFieldManager.getCustomFieldObjects().find {
-    it.name == "Vad gäller ärendet?"
+def issueType = constantsManager.getAllIssueTypeObjects().find { it.name == "Incident" }
+if (!issueType) {
+    log.error "Issue type 'Incident' kunde inte hittas."
+    return
 }
 
+def existingField = customFieldManager.getCustomFieldObjectByName("Vad gäller ärendet?")
 if (existingField) {
-    log.warn "Fältet 'Vad gäller ärendet?' finns redan med ID: ${existingField.id}"
+    log.warn "Fältet '${existingField.name}' finns redan (ID: ${existingField.id})"
     return
 }
 
-// Skapa custom field i projektets kontext
 def newField = customFieldManager.createCustomField(
-    "Vad gäller ärendet?",                        // Namn på fältet
-    "Specificering av lokalrelaterat problem",     // Beskrivning (visas i Admin)
-    customFieldManager.getCustomFieldType("com.atlassian.jira.plugin.system.customfieldtypes:select"), // Typ: Single Select
-    customFieldManager.getCustomFieldSearcher("com.atlassian.jira.plugin.system.customfieldtypes:selectsearcher"), // Sökningsstöd
-    [projectContext] as Collection,                // Skapa kontexten för projektet "Felanmälan"
-    []  // Field configuration schemes kan läggas till senare om du vill definiera specifika konfigurationer
+    "Vad gäller ärendet?",
+    "Specificering av lokalrelaterat problem",
+    customFieldManager.getCustomFieldType("com.atlassian.jira.plugin.system.customfieldtypes:select"),
+    customFieldManager.getCustomFieldSearcher("com.atlassian.jira.plugin.system.customfieldtypes:selectsearcher"),
+    [new JiraContextImpl(project)] as Collection<JiraContextNode>,
+    [issueType.id] as Collection<String>
 )
 
-log.info "Fältet 'Vad gäller ärendet?' har skapats med ID: ${newField.id} för projektet 'Felanmälan'"
+log.info "✅ Fält skapat: ${newField.name} (ID: ${newField.id}) för projektet ${project.name} och issue type ${issueType.name}"
