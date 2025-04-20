@@ -10,7 +10,7 @@ def description = "Ett exempel på ett custom field"
 
 // Hämta typerna via customFieldManager
 def fieldType = customFieldManager.getCustomFieldType("com.atlassian.jira.plugin.system.customfieldtypes:select")
-def fieldSearcher = customFieldManager.getCustomFieldSearcher("com.atlassian.jira.plugin.system.customfieldtypes:multiselectsearcher")
+def fieldSearcher = customFieldManager.getCustomFieldSearcher("com.atlassian.jira.plugin.system.customfieldtypes:selectsearcher") // <-- Ändring här!
 
 // Kontrollera om fältet redan finns
 def existingField = customFieldManager.getCustomFieldObjectsByName(fieldName).find()
