@@ -1,0 +1,42 @@
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.context.GlobalIssueContext
+
+// Managers
+def cfMgr      = ComponentAccessor.customFieldManager
+def schemeMgr  = ComponentAccessor.getComponent(com.atlassian.jira.issue.fields.config.manager.FieldConfigSchemeManager)
+def optionsMgr = ComponentAccessor.getComponent(com.atlassian.jira.issue.customfields.manager.OptionsManager)
+
+// Fältnamn och beskrivning
+def fieldName   = "Mitt Single Choice Fält"
+def description = "Ett exempel på ett single‑choice dropdownfält"
+
+// Undvik dubbletter
+if (cfMgr.getCustomFieldObjectsByName(fieldName)) {
+    log.warn("Fältet '$fieldName' finns redan.")
+    return
+}
+
+// Hämta fälttyp och sökare
+def fieldType = cfMgr.getCustomFieldType("com.atlassian.jira.plugin.system.customfieldtypes:select")
+def searcher  = cfMgr.getCustomFieldSearcher("com.atlassian.jira.plugin.system.customfieldtypes:selectsearcher")
+
+// Skapa custom field
+def customField = cfMgr.createCustomField(
+    fieldName,
+    description,
+    fieldType,
+    searcher,
+    [GlobalIssueContext.getInstance()],
+    null
+)
+
+// Skapa och hämta standard FieldConfigScheme + FieldConfig
+def scheme      = schemeMgr.createDefaultScheme(customField, [GlobalIssueContext.getInstance()])
+def fieldConfig = scheme.getOneAndOnlyConfig()
+
+// Lägg till alternativ
+optionsMgr.createOption(fieldConfig, null, 1L, "Alternativ 1")
+optionsMgr.createOption(fieldConfig, null, 2L, "Alternativ 2")
+optionsMgr.createOption(fieldConfig, null, 3L, "Alternativ 3")
+
+log.warn("Custom field '$fieldName' skapades med tre alternativ.")
