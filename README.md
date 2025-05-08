@@ -4,8 +4,5 @@
 
 ## Teknologi
 - Jira Service Management
-- ScriptRunner for Jira Cloud
-- Jira REST API
+- ScriptRunner for JSM Data Center
 
-## Komma igång
-För att komma igång, följ guiden i [Getting Started](docs/gettingstarted.md).
