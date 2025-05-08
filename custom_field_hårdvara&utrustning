@@ -10,7 +10,7 @@ def optionsMgr = ComponentAccessor.getComponent(OptionsManager)
 def schemeMgr = ComponentAccessor.getComponent(FieldConfigSchemeManager)
 
 // Fältnamn
-def fieldName = "Vad i lokalen handlar ärendet om?"
+def fieldName = "Vad för hårdvara eller utrustning handlar det om?"
 
 // Kolla om fältet redan finns
 if (cfMgr.getCustomFieldObjectsByName(fieldName)) {
