@@ -11,6 +11,7 @@ def schemeMgr = ComponentAccessor.getComponent(FieldConfigSchemeManager)
 
 // Fältnamn
 def fieldName = "Vad inom uppkoppling eller säkerhet?"
+def description  = "" 
 
 // Kolla om fältet redan finns
 if (cfMgr.getCustomFieldObjectsByName(fieldName)) {
